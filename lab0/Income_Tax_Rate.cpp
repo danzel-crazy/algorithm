@@ -1,6 +1,7 @@
 #include <iostream>
 #include <map>
 #include <iomanip>
+#include <vector>
 
 #define t long long
 
@@ -17,11 +18,11 @@ int main(){
 
     cin >> n;
 
-    map <t, long double> a;
+    vector <pair<t, long double>> a;
 
     while(n--){
         cin >> range >> val;
-        a[range-1] = val;
+        a.push_back(make_pair(range-1,val));
     }
 
     cin >> n;
@@ -43,7 +44,11 @@ int main(){
             last.first = i->first;
             last.second = i->second;
         }
-        cout << setprecision(2) << fixed << answer << "\n";
+        if(income >= a[a.size()-1].first){
+            answer += (income-a[a.size()-1].first) * a[a.size()-1].second;
+        }
+
+        cout << setprecision(6) << fixed << answer << "\n";
     }
     return 0;
 }
