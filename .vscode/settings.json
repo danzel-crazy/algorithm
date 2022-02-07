@@ -24,6 +24,9 @@
         "xiosbase": "cpp",
         "algorithm": "cpp",
         "ostream": "cpp",
-        "initializer_list": "cpp"
+        "initializer_list": "cpp",
+        "cmath": "cpp",
+        "bitset": "cpp",
+        "iterator": "cpp"
     }
 }
