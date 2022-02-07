@@ -14,7 +14,7 @@ int treversal(vector <int> &a, vector <pair <int,int>> &out, int current){
 }
 
 signed main(){
-	cin.sync_with_stdio(0);
+    cin.sync_with_stdio(0);
     cin.tie(0);
     int n;
     cin >> n;
