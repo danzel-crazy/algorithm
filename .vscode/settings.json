@@ -27,6 +27,8 @@
         "initializer_list": "cpp",
         "cmath": "cpp",
         "bitset": "cpp",
-        "iterator": "cpp"
+        "iterator": "cpp",
+        "system_error": "cpp",
+        "xlocnum": "cpp"
     }
 }
