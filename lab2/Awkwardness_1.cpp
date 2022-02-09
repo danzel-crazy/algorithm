@@ -1,90 +1,48 @@
 #include <iostream>
 #include <vector>
-#include <unordered_map>
-
+#include <map>
+#include <algorithm>
 using namespace std;
+typedef vector<int>::iterator it;
+int traverse(vector<int>&, it, it, it, it, vector<it>&);
+int main(){
+    cin.sync_with_stdio(0);
+    cin.tie(0);
+    int num, temp;
+    cin >> num;
+    vector<int> stat(num), inOr(num), postOr(num);
+    vector<it> ptr(num+1); 
 
-int ans = 0;
-vector <int> a;
-
-struct Node
-{
-	int key;
-	Node *left, *right;
-
-	Node(int key)
-	{
-		this->key = key;
-		this->left = this->right = nullptr;
-	}
-};
-
-Node* construct(int start, int end,
-				vector<int> const &postorder, int &pIndex,
-				unordered_map<int, int> &map)
-{
-	
-	if (start > end) {
-		return nullptr;
-	}
-
-	
-	Node* root = new Node(postorder[pIndex--]);
-
-	int index = map[root->key];
-
-	root->right = construct(index + 1, end, postorder, pIndex, map);
-
-	root->left = construct(start, index - 1, postorder, pIndex, map);
-
-    if(root->left != nullptr){
-        if(a[root->key-1] < a[root->left->key-1]) ans++;
+    for(int i = 0; i < num; i++)
+        cin >> stat[i];
+    for(int i = 0; i < num; i++){
+        cin >> inOr[i];
+        ptr[inOr[i]] = inOr.begin()+i;
     }
-    if(root->right != nullptr){
-        if(a[root->key-1] < a[root->right->key-1]) ans++;
+    for(int i = 0; i < num; i++){
+        cin >> temp;
+        postOr[i] = *ptr[temp];
     }
-
-	return root;
+    cout << traverse(stat, inOr.begin(), inOr.end(), postOr.begin(), postOr.end(), ptr) << '\n';
 }
 
-Node* construct(vector<int> const &inorder, vector<int> const &postorder)
-{
-	int n = inorder.size();
-
-	unordered_map<int, int> map;
-	for (int i = 0; i < inorder.size(); i++) {
-		map[inorder[i]] = i;
-	}
-
-	int pIndex = n - 1;
-	return construct(0, n - 1, postorder, pIndex, map);
-}
-
-int main()
-{
-	int n;
-    cin >> n;
-    vector <int> in_order, post_order;
-    for(int i = 0 ; i < n; i++){
-        int s;
-        cin >> s;
-        a.push_back(s);
-    }
-
-    for(int i = 0 ; i < n; i++){
-        int s;
-        cin >> s;
-        in_order.push_back(s);
-    }
-
-    for(int i = 0 ; i < n; i++){
-        int s;
-        cin >> s;
-        post_order.push_back(s);
-    }
-
-	Node* root = construct(in_order, post_order);
-
-    cout << ans << "\n";
-	return 0;
+int traverse(vector<int>& stat, it ib, it ie, it pb, it pe, vector<it>& ptr){
+    if(ie - ib == 1)
+        return 0;
+    
+    int root = *(pe-1);
+    // int* rt = vector[1]
+    it rootIn = ptr[root];  
+    it leftRoot, rightRoot;
+    if(rootIn - ib == 0){
+        rightRoot = pe-2;
+        return (stat[*rightRoot-1] > stat[root-1]) + traverse(stat, rootIn+1, ie, pb, rightRoot+1, ptr);
+    }else if(ie - rootIn - 1 == 0){
+        leftRoot = pe-2;
+        return (stat[*leftRoot-1] > stat[root-1]) + traverse(stat, ib, rootIn, pb, leftRoot+1, ptr);
+    }else{
+        leftRoot = pb + (rootIn - ib) - 1;
+        rightRoot = pe-2;
+        return (stat[*rightRoot-1] > stat[root-1]) + (stat[*leftRoot-1] > stat[root-1]) + traverse(stat, ib, rootIn, pb, leftRoot+1, ptr) + traverse(stat, rootIn+1, ie, leftRoot+1, rightRoot+1, ptr);
+    }  
 }
