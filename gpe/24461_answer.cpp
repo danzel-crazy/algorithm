@@ -1,43 +1,34 @@
 #include <iostream>
-#include <algorithm>
 #include <vector>
-#include <stdlib.h>
-#include <string.h>
-#include <stdio.h>
-
-using namespace std; 
-
-vector <int> a;
-
-int main(){
-    a.push_back(2);
-    a.push_back(3);
-    for(int i = 4; i < 10000; i++){
-        bool prime = true;
-        for(int j = 0; j < a.size(); j++){
-            if(i % a[j] == 0){
-                prime = false;
-                break;
+using namespace std;
+const int maxn = 10000+5;
+int p[maxn];
+vector <int> v;
+ 
+int main() {
+    for (int i = 2; i < maxn; i++){
+        if (p[i] == 0){
+            for (int j = i+i; j < maxn; j+=i){
+                p[j] = 1;
             }
+            v.push_back(i);
         }
-        if(prime) a.push_back(i);
     }
-    // for(auto i : a) cout << i << " ";
-    // cout << endl;
     int n;
-    while(cin >> n){
-        if(n == 0) break;
-        int tt = 0;
-        for(int i = 0; a[i] <= n; i++){
-            int temp = 0;
-            for(int j = i; temp < n; j++){
-                temp += a[j];
-                if(temp == n){
-                    tt++;
+    while (cin >> n){
+        if (n == 0) break;
+        int cnt = 0;
+        for (int i = 0; v[i] <= n; i++){
+            int sum = 0;
+            for (int j = i; sum < n; j++){
+                sum += v[j];
+                if (sum == n) {
+                    cnt++;
+                    break;
                 }
             }
         }
-        printf("%d\n", tt);
+        cout << cnt << "\n";
     }
     return 0;
 }
