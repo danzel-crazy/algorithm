@@ -37,7 +37,7 @@ void BFS(int i,int j)
 int main()
 {
 	int c;
-	while(~scanf ("%d %d",&n,&m)&&n&&m)
+	while(~scanf("%d %d",&n,&m)&&n&&m)
 	{
 		c=0;
 		for (int i=0;i<n;i++)
