@@ -10,6 +10,7 @@ vector<long long> value = {1000, 500, 100, 50, 10, 5, 1};
 int main(){
     cin.sync_with_stdio(0);
     cin.tie(0);
+    
     long long t;
     long long sum;
     cin >> t;
